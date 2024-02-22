@@ -6,6 +6,7 @@ Description: A modularized shiny package for data visualization of the CDR surve
 License: GPL (>= 3)
 Imports: 
     attempt,
+    cdrs,
     config (>= 0.3.2),
     DT,
     glue,
@@ -14,7 +15,7 @@ Imports:
     shiny (>= 1.8.0)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.3.1
 Suggests: 
     spelling,
     testthat (>= 3.0.0)
