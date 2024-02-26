@@ -9,9 +9,7 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic
-    fluidPage(
-      h1("shinycdrs")
-    )
+    mod_crosstabs_ui("crosstabs_1")
   )
 }
 
