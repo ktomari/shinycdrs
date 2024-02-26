@@ -1,17 +1,18 @@
 Package: shinycdrs
-Title: Shiny California Delta Residents Survey
+Title: Shiny cdrs
 Version: 0.0.0.9000
-Authors@R: person('Kenji', 'Tomari', email = 'ktomari@ucdavis.edu', role = c('cre', 'aut'), comment = c(ORCID = '0000-0001-8039-3999'))
-Description: A modularized shiny package for data visualization of the CDR survey.
+Authors@R: person('Kenji', 'Tomari', email = 'ktomari@ucdavis.edu', role = c('cre', 'aut'))
+Description: A shiny app to explore the California Delta Resident's Survey.
 License: GPL (>= 3)
 Imports: 
     attempt,
-    cdrs,
+    cdrs (>= 0.1.1),
     config (>= 0.3.2),
     DT,
     glue,
     golem (>= 0.4.1),
     htmltools,
+    sf,
     shiny (>= 1.8.0)
 Encoding: UTF-8
 LazyData: true
@@ -21,3 +22,9 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Language: en-US
+URL: https://github.com/ktomari/shinycdrs
+BugReports: https://github.com/ktomari/shinycdrs/issues
+Remotes: 
+    github::ktomari/cdrs
+Depends: 
+    R (>= 2.10)
