@@ -9,11 +9,9 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     navbarPage(title = "Delta Residents Survey Data Analysis",
-               tabsetPanel(
-                 # Your application UI logic
                  tabPanel("Crosstabs",
                           mod_crosstabs_ui("crosstabs_1"))
-               )
+
     )
   )
 }
