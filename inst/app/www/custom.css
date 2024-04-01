@@ -1,0 +1,15 @@
+.custom-text-output, .custom-gt-output {
+        width: 600px; /* Set the width for both */
+        margin-left: 0; /* Align to the left by adjusting the margin */
+        text-align: left; /* Ensure content is left-aligned */
+      }
+
+.custom-gt-output .gt_table {
+        margin-left: 0 !important; /* Specifically ensure gt table aligns to the left */
+      }
+/*
+.custom-plot-output {
+  margin-left: 0;
+  text-align: left;
+}
+*/
