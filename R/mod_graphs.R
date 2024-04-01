@@ -44,7 +44,7 @@ mod_graphs_server <- function(id){
     output$prompt_label <- renderUI({
       vars_ <- rct_vars()
 
-      if(is.null(cols_)){
+      if(is.null(vars_)){
         return(NULL)
       }
 

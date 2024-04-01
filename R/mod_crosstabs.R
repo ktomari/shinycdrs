@@ -10,7 +10,7 @@
 mod_crosstabs_ui <- function(id){
   ns <- NS(id)
   tagList(
-    shiny::HTML("<p>This page allows you to examine the proportion of survey respondents that fall into various categories that appear in the survey questions. In other words, this page performs a two-way (weighted) cross tabulation.</p>"),
+    shiny::HTML("<p>This page allows you to examine the proportion of survey respondents that fall into various categories that appear in the survey questions. In other words, this page performs a two-way (weighted) cross tabulation. The cells in each table below represent the percent of the overall population that fall into the cross of the two categories (ie. that cell).</p>"),
     selectizeInput(inputId = NS(id, "xtvars"),
                    label = "Choose two options:",
                    choices = unique(params_crosstabs$short_title),
