@@ -1,5 +1,6 @@
 library(sf)
 library(tidyverse)
+library(tigris)
 
 counties <- tigris::counties(state = "06")
 
