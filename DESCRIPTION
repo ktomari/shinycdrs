@@ -16,15 +16,14 @@ Imports:
     pkgload,
     sf,
     shiny (>= 1.8.0)
-Suggests:
-    devtools,
-    rsconnect
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.1
 Suggests: 
     spelling,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    devtools,
+    rsconnect
 Config/testthat/edition: 3
 Language: en-US
 URL: https://github.com/ktomari/shinycdrs
