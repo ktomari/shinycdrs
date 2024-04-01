@@ -9,8 +9,11 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     navbarPage(title = "Delta Residents Survey Data Analysis",
-                 tabPanel("Crosstabs",
-                          mod_crosstabs_ui("crosstabs_1"))
+               tabPanel("Welcome", shiny::HTML(welcome_html)),
+               tabPanel("Graphs",
+                        mod_graphs_ui("graphs_1")),
+               tabPanel("Cross Tabulation",
+                        mod_crosstabs_ui("crosstabs_1"))
 
     )
   )
