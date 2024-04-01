@@ -12,6 +12,8 @@ Imports:
     glue,
     golem (>= 0.4.1),
     htmltools,
+    magrittr,
+    pkgload,
     sf,
     shiny (>= 1.8.0)
 Encoding: UTF-8
@@ -26,5 +28,6 @@ URL: https://github.com/ktomari/shinycdrs
 BugReports: https://github.com/ktomari/shinycdrs/issues
 Remotes: 
     github::ktomari/cdrs
+    github::ktomari/shinycdrs
 Depends: 
     R (>= 2.10)
