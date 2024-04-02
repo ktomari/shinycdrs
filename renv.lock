@@ -247,14 +247,14 @@
     },
     "cdrs": {
       "Package": "cdrs",
-      "Version": "0.2.0",
+      "Version": "0.2.1",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "cdrs",
       "RemoteUsername": "ktomari",
       "RemoteRef": "HEAD",
-      "RemoteSha": "34abc2db1e21a7c04b7dffa9aa7bb262981d9eae",
+      "RemoteSha": "8d209881a1be0af38fa7440b2851f4f44c10530e",
       "Requirements": [
         "R",
         "digest",
@@ -275,7 +275,7 @@
         "tidyselect",
         "utils"
       ],
-      "Hash": "5b653ca9950b84b98078a9a5102d569d"
+      "Hash": "2d00df6213753a7b3bc9ff20321e47e9"
     },
     "cellranger": {
       "Package": "cellranger",
@@ -1355,7 +1355,7 @@
     },
     "shiny": {
       "Package": "shiny",
-      "Version": "1.8.1",
+      "Version": "1.8.1.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1384,7 +1384,7 @@
         "withr",
         "xtable"
       ],
-      "Hash": "a49e145ac3d0d1299e19ab215504f88e"
+      "Hash": "54b26646816af9960a4c64d8ceec75d6"
     },
     "sourcetools": {
       "Package": "sourcetools",
