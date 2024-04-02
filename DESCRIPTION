@@ -1,6 +1,6 @@
 Package: shinycdrs
 Title: Shiny cdrs
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: person('Kenji', 'Tomari', email = 'ktomari@ucdavis.edu', role = c('cre', 'aut'))
 Description: A shiny app to explore the California Delta Resident's Survey.
 License: GPL (>= 3)
@@ -8,14 +8,21 @@ Imports:
     attempt,
     cdrs (>= 0.1.1),
     config (>= 0.3.2),
+    dplyr,
     DT,
+    forcats,
     glue,
     golem (>= 0.4.1),
+    gt,
     htmltools,
     magrittr,
     pkgload,
+    purrr,
+    readxl,
     sf,
-    shiny (>= 1.8.0)
+    shiny (>= 1.8.0),
+    stringr,
+    tidyr
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.1
@@ -23,7 +30,8 @@ Suggests:
     spelling,
     testthat (>= 3.0.0),
     devtools,
-    rsconnect
+    rsconnect,
+    usethis
 Config/testthat/edition: 3
 Language: en-US
 URL: https://github.com/ktomari/shinycdrs

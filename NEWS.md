@@ -1,3 +1,3 @@
-# shinycdrs (development version)
+# shinycdrs 0.1.0
 
 * Initial CRAN submission.
