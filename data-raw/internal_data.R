@@ -15,7 +15,19 @@ public_set_counties <- c(
 counties <- counties %>%
   filter(COUNTYFP %in% public_set_counties)
 
+# Public data
+path_ <- list.files(path = "data-raw",
+                    pattern = "\\.zip",
+                    full.names = T)
+
+dat <- cdrs::cdrs_read(path_ = path_)
+
 usethis::use_data(
   counties,
+  dat,
   internal = T,
   overwrite = T)
+
+
+
+
