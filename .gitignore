@@ -6,3 +6,5 @@
 .quarto
 data/
 ~*
+R/sysdata.rda
+archived
