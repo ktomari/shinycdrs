@@ -8,19 +8,23 @@
 #'
 #' @importFrom shiny NS tagList
 mod_crosstabs_ui <- function(id){
-  ns <- NS(id)
-  tagList(
-    shiny::HTML("<p>This page allows you to examine the proportion of survey respondents that fall into various categories that appear in the survey questions. In other words, this page performs a two-way (weighted) cross tabulation. The cells in each table below represent the percent of the overall population that fall into the cross of the two categories (ie. that cell).</p>"),
-    selectizeInput(inputId = NS(id, "xtvars"),
+  ns <- shiny::NS(id)
+  htmltools::tagList(
+    htmltools::HTML("<p>This page allows you to examine the proportion of survey respondents that fall into various categories that appear in the survey questions. In other words, this page performs a two-way (weighted) cross tabulation. The cells in each table below represent the percent of the overall population that fall into the cross of the two categories (ie. that cell).</p>"),
+    shiny::selectizeInput(inputId = shiny::NS(id, "xtvars"),
                    label = "Choose two options:",
-                   choices = unique(params_crosstabs$short_title),
+                   choices = unique(env_dat$params_crosstabs$short_title),
                    multiple = TRUE,
                    width = "50%",
                    options = list(maxItems = 2)
                    ),
     # Placeholder for the DT table
-    div(gt::gt_output(NS(id, "table")), class = "custom-gt-output"),
-    div(uiOutput(NS(id, "prompt_label")), class = "custom-text-output")
+    htmltools::div(
+      gt::gt_output(shiny::NS(id, "table")),
+                   class = "custom-gt-output"),
+    htmltools::div(
+      shiny::uiOutput(shiny::NS(id, "prompt_label")),
+                   class = "custom-text-output")
     # htmlOutput(NS(id, 'table'))
     # DT::DTOutput(NS(id, "table"))
   )
@@ -30,13 +34,13 @@ mod_crosstabs_ui <- function(id){
 #'
 #' @noRd
 mod_crosstabs_server <- function(id){
-  moduleServer( id, function(input, output, session){
+  shiny::moduleServer( id, function(input, output, session){
     ns <- session$ns
 
     # rct_vars ----
     rct_vars <- reactive({
       if(length(input$xtvars) >= 2){
-      vars_ <- params_crosstabs %>%
+      vars_ <- env_dat$params_crosstabs %>%
         dplyr::filter(short_title %in% input$xtvars) %>%
         dplyr::pull(Variable) %>%
         unique()
@@ -47,14 +51,17 @@ mod_crosstabs_server <- function(id){
     })
 
     # output$prompt_label ----
-    output$prompt_label <- renderUI({
+    output$prompt_label <- shiny::renderUI({
       vars_ <- rct_vars()
+
+      # # TODO
+      # return(NULL)
 
       if(length(vars_) != 2){
         return(NULL)
       }
 
-      out <- dat$dict %>%
+      out <- env_dat$dat$dict %>%
         dplyr::filter(Variable %in% vars_) %>%
         tidyr::nest(.by = Variable,
                     .key = "nested") %>%
@@ -92,7 +99,7 @@ mod_crosstabs_server <- function(id){
       }
 
       # RETURN
-      HTML(html_)
+      htmltools::HTML(html_)
     })
 
     # output$table ----
@@ -105,7 +112,7 @@ mod_crosstabs_server <- function(id){
         }
 
         gt_ <- gt_crosstab(
-          data_ = dat$data,
+          data_ = env_dat$dat$data,
           cols_ = vars_
         )
 

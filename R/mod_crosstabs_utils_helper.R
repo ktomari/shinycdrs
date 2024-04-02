@@ -3,6 +3,8 @@
 #' @param data_ is the DRS dataset.
 #' @param cols_ is a character vector, length 2, of variable names, eg. Q1_0.
 #' @return object of class gt_tbl
+#' @noRd
+#' @importFrom stats as.formula
 gt_crosstab <- function(
     data_,
     cols_
@@ -88,3 +90,6 @@ gt_crosstab <- function(
   # return
   gt_
 }
+
+
+
