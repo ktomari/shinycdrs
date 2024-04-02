@@ -85,10 +85,29 @@ mod_graphs_server <- function(id){
         return(NULL)
       }
 
+      # Demographic values
+      # should not be weighted
+      if(T %in% (
+        cols_ %in% c(
+        "SEX_P",
+        "RACE_P",
+        "INCOME_P",
+        "AGE_P",
+        "ETHNICITY_P",
+        "EDU_P",
+        "HOMEOWNERSHIP_P",
+        "LANGUAGE_P"
+      ))){
+        wgt <- FALSE
+      } else {
+        wgt <- TRUE
+      }
+
       prep_ <- cdrs::cdrs_plt_prep(
         data_ = env_dat$dat$data,
         cols_ = cols_,
         dict_ = env_dat$dat$dict,
+        is_weighted = wgt,
         txt_options = list(
           label_form = "short",
           title_form = "short",
