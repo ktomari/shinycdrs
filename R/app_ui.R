@@ -9,7 +9,7 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     navbarPage(title = "Delta Residents Survey Data Analysis",
-               tabPanel("Welcome", shiny::HTML(welcome_html)),
+               tabPanel("Welcome", shiny::HTML(env_dat$welcome_html)),
                tabPanel("Graphs",
                         mod_graphs_ui("graphs_1")),
                tabPanel("Cross Tabulation",
@@ -34,7 +34,7 @@ golem_add_external_resources <- function() {
   )
 
   tags$head(
-    favicon(),
+    favicon(ext = "png"),
     bundle_resources(
       path = app_sys("app/www"),
       app_title = "shinycdrs"
