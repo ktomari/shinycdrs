@@ -49,21 +49,11 @@ gt_crosstab <- function(
 
   dat <- cdrs:::remove_angle_brackets(dat, cols_)
 
-
-  # create complex survey design object
-  design_ <- cdrs::cdrs_design(dat)
-
-  # get proportions
-  tbl <- survey::svytable(
-    formula = as.formula(paste0("~ ",
-                                cols_[1],
-                                " + ",
-                                cols_[2])),
-    design = design_
+  # create cross tab
+  props_ <- cdrs::cdrs_crosstab(
+    data_ = data_,
+    cols_ = cols_
   )
-
-  props_ <- prop.table(tbl) %>%
-    as.data.frame()
 
   # pivot proportions table
   props_ <- props_ %>%
