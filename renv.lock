@@ -254,7 +254,7 @@
       "RemoteRepo": "cdrs",
       "RemoteUsername": "ktomari",
       "RemoteRef": "HEAD",
-      "RemoteSha": "8d209881a1be0af38fa7440b2851f4f44c10530e",
+      "RemoteSha": "97e82ddcc4aa730b25e3ddf979830eba2808323a",
       "Requirements": [
         "R",
         "digest",
@@ -275,7 +275,7 @@
         "tidyselect",
         "utils"
       ],
-      "Hash": "2d00df6213753a7b3bc9ff20321e47e9"
+      "Hash": "4a9a7d614d4d245c35e9c5fbf23be200"
     },
     "cellranger": {
       "Package": "cellranger",
