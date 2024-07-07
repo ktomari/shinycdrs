@@ -5,18 +5,36 @@
 #' @import shiny
 #' @noRd
 app_ui <- function(request) {
-  tagList(
-    # Leave this function for adding external resources
-    golem_add_external_resources(),
-    navbarPage(title = "Delta Residents Survey Data Analysis",
-               tabPanel("Welcome", shiny::HTML(env_dat$welcome_html)),
-               tabPanel("Graphs",
-                        mod_graphs_ui("graphs_1")),
-               tabPanel("Cross Tabulation",
-                        mod_crosstabs_ui("crosstabs_1"))
-
-    )
-  )
+  # begin shinyMobile page
+  shinyMobile::f7Page(
+    # Layout
+    shinyMobile::f7TabLayout(
+      # Layout Navbar
+      navbar = shinyMobile::f7Navbar(
+        title = "California Delta Residents Survey Data Explorer",
+        hairline = TRUE,
+        leftPanel = FALSE,
+        rightPanel = FALSE
+      ),  # END navbar
+      # Tabs
+      shinyMobile::f7Tabs(
+        animated = TRUE,
+        shinyMobile::f7Tab(
+          title = "Home",
+          tabName = "home",
+          icon = shinyMobile::f7Icon("house"),
+          shinyMobile::f7Block("placeholder")
+        ),
+        shinyMobile::f7Tab(
+          title = "Graphs",
+          tabName = "graphs",
+          icon = shinyMobile::f7Icon("chart_bar_alt_fill"),
+          mod_graphs_ui("graphs_1")
+        )
+      )  # END tabs
+    )  # END tab layout
+  )  # END page
+  
 }
 
 #' Add external Resources to the Application
