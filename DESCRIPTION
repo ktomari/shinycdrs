@@ -21,6 +21,7 @@ Imports:
     readxl,
     sf,
     shiny (>= 1.8.0),
+    shinyMobile (>= 2.0.0),
     stringr,
     tidyr,
     tidyselect
