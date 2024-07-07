@@ -48,7 +48,7 @@
                 "shiny_parameters.xlsx",
                 package = "shinycdrs"),
     sheet = "graphs",
-    col_types = c("text", "text", "logical")
+    col_types = c("text", "text", "logical", "text")
   ) %>%
     dplyr::filter(listed == TRUE)
 
