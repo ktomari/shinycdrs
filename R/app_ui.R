@@ -7,6 +7,9 @@
 app_ui <- function(request) {
   # begin shinyMobile page
   shinyMobile::f7Page(
+    options = list(
+      dark = FALSE  # Set the default theme to light
+    ),  
     # Layout
     shinyMobile::f7TabLayout(
       # Layout Navbar
@@ -23,7 +26,10 @@ app_ui <- function(request) {
           title = "Home",
           tabName = "home",
           icon = shinyMobile::f7Icon("house"),
-          shinyMobile::f7Block("placeholder")
+          shinyMobile::f7Block(
+            # htmlOutput("home_html")
+            shiny::includeHTML("inst/app/www/homepage.html")
+          )
         ),
         shinyMobile::f7Tab(
           title = "Graphs",
