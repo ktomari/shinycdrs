@@ -10,23 +10,40 @@
 mod_crosstabs_ui <- function(id){
   ns <- shiny::NS(id)
   htmltools::tagList(
-    htmltools::HTML("<p>This page allows you to examine the proportion of survey respondents that fall into various categories that appear in the survey questions. In other words, this page performs a two-way (weighted) cross tabulation. The cells in each table below represent the percent of the overall population that fall into the cross of the two categories (ie. that cell).</p>"),
-    shiny::selectizeInput(inputId = shiny::NS(id, "xtvars"),
-                   label = "Choose two options:",
-                   choices = unique(env_dat$params_crosstabs$short_title),
-                   multiple = TRUE,
-                   width = "50%",
-                   options = list(maxItems = 2)
-                   ),
+    shinyMobile::f7Card(
+      shinyMobile::f7SmartSelect(
+        inputId = shiny::NS(id, "xtvars"),
+        label = "Select two options:",
+        choices = unique(env_dat$params_crosstabs$short_title),
+        selected = c("1. General Relation to the Delta - Resident",
+                     "Zone"),
+        multiple = TRUE,
+        maxLength = 2
+      )
+    ),
     # Placeholder for the DT table
-    htmltools::div(
+    shinyMobile::f7Card(
+      # htmltools::div(
       gt::gt_output(shiny::NS(id, "table")),
-                   class = "custom-gt-output"),
-    htmltools::div(
-      shiny::uiOutput(shiny::NS(id, "prompt_label")),
-                   class = "custom-text-output")
-    # htmlOutput(NS(id, 'table'))
-    # DT::DTOutput(NS(id, "table"))
+        # class = "custom-gt-output"),
+      footer = htmltools::div(
+        shiny::uiOutput(shiny::NS(id, "prompt_label")),
+        class = "custom-text-output")
+    ),
+    shinyMobile::f7Accordion(
+      side = "left",
+      shinyMobile::f7AccordionItem(
+        title = "About This Table",
+        open = FALSE,
+        htmltools::HTML(
+          paste0('<p>This "cross-tabulation table" is used to compare two survey questions or, in some cases, different options from survey variables, such as one of the several ways residents relate to the Delta. In technical terms, this table represents a two-way weighted cross-tabulation. Weighting allows us to correct for biases that may arise from the sampling process, such as an overrepresentation of respondents identifying as "female."</p>',
+          '<p>The cells in the table display both the count and the percentage of the overall population that falls into each intersection (or "cross") of the two categories. For example, a cell might show the number and percentage of male respondents who prefer Option A. The sum of all percentages displayed in the body of the table equals 100% of the surveyed population, ensuring that all responses are accounted for.</p>',
+          '<p>In contrast, the percentages in the bottom row, labeled "Sum," indicate the total percentage of respondents in each column category. This provides a quick overview of the distribution of responses across each category and helps identify trends or patterns within the survey data.</p>',
+          '<p>The survey data that this table uses comes from the 2023 California Delta Residents survey. For more information please visit the <a href="https://ktomari.github.io/DeltaResidentsSurvey/">project homepage</a>, which includes links to the data and the open source code used in this web app.</p>'
+                 )
+        )
+      )
+    )
   )
 }
 
@@ -39,7 +56,7 @@ mod_crosstabs_server <- function(id){
 
     # rct_vars ----
     rct_vars <- reactive({
-      if(length(input$xtvars) >= 2){
+      if(length(input$xtvars) == 2){
       vars_ <- env_dat$params_crosstabs %>%
         dplyr::filter(short_title %in% input$xtvars) %>%
         dplyr::pull(Variable) %>%
@@ -53,9 +70,6 @@ mod_crosstabs_server <- function(id){
     # output$prompt_label ----
     output$prompt_label <- shiny::renderUI({
       vars_ <- rct_vars()
-
-      # # TODO
-      # return(NULL)
 
       if(length(vars_) != 2){
         return(NULL)
@@ -76,30 +90,22 @@ mod_crosstabs_server <- function(id){
         })) %>%
         dplyr::select(Variable, output) %>%
         dplyr::filter(output != "")
-
-      # return
-      if(nrow(out) > 1){
-        prompts_ <- out$output %>%
-          unique() %>%
-          paste0(collapse = '\", <br>\"')
-
-        html_ <- stringr::str_glue(
-          "Crosstabulation for {vars_[1]} and {vars_[2]}. The prompt(s) for these were: <br>\"{prompts_}\"."
-        )
-      } else if(nrow(out) == 1){
-        # lets figure out which variable has a prompt
-        no_prompt_var <- vars_[vars_ != out$Variable]
-        html_ <- stringr::str_glue(
-          "Crosstabulation for {vars_[1]} and {vars_[2]}. The prompt for {out$Variable} was <br>\"{out$output}\"."
-        )
-      } else {
-        html_ <- stringr::str_glue(
-          "Crosstabulation for {vars_[1]} and {vars_[2]}."
-        )
-      }
+      
+      out <- out$output %>%
+        unique() %>%
+        paste0(collapse = '</li><li>')
+      
+      out <- paste0(
+        "<b>Full survey questions:</b><br>",
+        "<ul>",
+        "<li>",
+        out,
+        "</li>",
+        "</ul>"
+      )
 
       # RETURN
-      htmltools::HTML(html_)
+      htmltools::HTML(out)
     })
 
     # output$table ----
@@ -111,29 +117,19 @@ mod_crosstabs_server <- function(id){
           return(NULL)
         }
 
-        gt_ <- gt_crosstab(
+        prep_ <- cdrs::cdrs_gt_prep(
           data_ = env_dat$dat$data,
-          cols_ = vars_
+          col1 = vars_[1],
+          col2 = vars_[2],
+          dict_ = env_dat$dat$dict,
+          add_labs = TRUE,
+          add_title = TRUE,
+          label_threshold = 20
         )
-
-        # xt <- cdrs::cdrs_crosstab(data_ = dat$data,
-        #                           cols_ = vars_,
-        #                           set_fpc = T) %>%
-        #   dplyr::select(!matches(stringr::regex("se",
-        #                                         ignore_case = T)))
-
-        # DT::datatable(xt,
-        #               options = list(paging = FALSE,
-        #                              searching = FALSE),
-        #               class = "display compact")
-
-        # table <- knitr::kable(x = xt, format = "html") %>%
-        #   kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),
-        #                 full_width = F) %>%
-        #   kableExtra::column_spec(1, bold = T) # Example customization
-        #
-        # # Return the table as HTML to be rendered in the UI
-        # HTML(table)
+        
+        gt_ <- cdrs::cdrs_gt_simple(
+          prep_
+        )
 
         # return
         gt_
