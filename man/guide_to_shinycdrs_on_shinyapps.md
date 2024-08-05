@@ -1,7 +1,3 @@
----
-title: "Guide to Running shinycdrs on shinyapps.io"
-format: html
----
 
 ## Introduction
 
@@ -19,9 +15,8 @@ Assuming your machine has git already installed, you can go to your command line
 
 Once you're in the directory, you can run the git command.
 
-```{r}
-#| eval: false
-`git clone https://github.com/ktomari/shinycdrs.git`
+```
+git clone https://github.com/ktomari/shinycdrs.git
 ```
 
 ### Running it on your local machine
@@ -32,8 +27,7 @@ Once you've cloned the shinycdrs repository, we need to the app running on your 
 
 There are a number of packages that shinycdrs depends on. Fortunately, shinycdrs is set up to use the package 'renv' to manage most of this. If you don't have 'renv' already installed on your machine, open R and run `install.packages('renv')`. Now you can install all the necessary dependencies.
 
-```{r}
-#| eval: false
+```
 renv::restore()
 ```
 
@@ -51,8 +45,7 @@ You can now do a local install of shinycdrs using `devtools::install()` while in
 
 Assuming you already have shinyapps.io credentials, follow the regular shinyapps.io setup as discussed [here](https://docs.posit.co/shinyapps.io/guide/getting_started/#configure-rsconnect). Generally, this involves this code:
 
-```{r}
-#| eval: false
+```
 rsconnect::setAccountInfo(
   name="<ACCOUNT>", 
   token="<TOKEN>", 
