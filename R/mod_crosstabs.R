@@ -11,14 +11,20 @@ mod_crosstabs_ui <- function(id){
   ns <- shiny::NS(id)
   htmltools::tagList(
     shinyMobile::f7Card(
+      div(
+        class = "selection-label",
+        "Select two options:"  # Standalone label text
+      ),
       shinyMobile::f7SmartSelect(
         inputId = shiny::NS(id, "xtvars"),
-        label = "Select two options:",
+        label = NULL,
         choices = unique(env_dat$params_crosstabs$short_title),
         selected = c("1. General Relation to the Delta - Resident",
                      "Zone"),
         multiple = TRUE,
-        maxLength = 2
+        maxLength = 2,
+        searchbar = TRUE,
+        openIn = "sheet"
       )
     ),
     # Placeholder for the DT table
@@ -36,10 +42,10 @@ mod_crosstabs_ui <- function(id){
         title = "About This Table",
         open = FALSE,
         htmltools::HTML(
-          paste0('<p>This "cross-tabulation table" is used to compare two survey questions or, in some cases, different options from survey variables, such as one of the several ways residents relate to the Delta. In technical terms, this table represents a two-way weighted cross-tabulation. Weighting allows us to correct for biases that may arise from the sampling process, such as an overrepresentation of respondents identifying as "female."</p>',
-          '<p>The cells in the table display both the count and the percentage of the overall population that falls into each intersection (or "cross") of the two categories. For example, a cell might show the number and percentage of male respondents who prefer Option A. The sum of all percentages displayed in the body of the table equals 100% of the surveyed population, ensuring that all responses are accounted for.</p>',
-          '<p>In contrast, the percentages in the bottom row, labeled "Sum," indicate the total percentage of respondents in each column category. This provides a quick overview of the distribution of responses across each category and helps identify trends or patterns within the survey data.</p>',
-          '<p>The survey data that this table uses comes from the 2023 California Delta Residents survey. For more information please visit the <a href="https://ktomari.github.io/DeltaResidentsSurvey/">project homepage</a>, which includes links to the data and the open source code used in this web app.</p>'
+          paste0('<p>This "cross-tabulation table" is used to compare two survey questions or, in some cases, different options from survey variables, such as one of the several ways residents relate to the Delta. In technical terms, this table represents a two-way weighted cross-tabulation. Weighting allows us to correct for biases that may arise from the survey sampling process, such as the common survey issue of the overrepresentation of "female" respondents.</p>',
+          '<p>The cells in the table display both the count and the percentage of the overall population that falls into each intersection (or "cross") of the two categories. For example, a cell might show the number and percentage of "male" respondents who identify as Delta residents. The sum of all percentages displayed in the body of the table equals 100% of the surveyed population, ensuring that all responses are accounted for.</p>',
+          '<p>In contrast, the percentages in the bottom row, labeled "Sum," indicate the total percentage of respondents in each column category, such as the total number of "male" respondents. This provides a quick overview of the distribution of responses across each category and helps identify trends or patterns within the survey data.</p>',
+          '<p>The data comes from the 2023 California Delta Residents survey. For more information please visit the <a href="https://ktomari.github.io/DeltaResidentsSurvey/">project homepage</a>, which includes links to the data and the open source code used in this web app.</p>'
                  )
         )
       )
