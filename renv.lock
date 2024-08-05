@@ -226,6 +226,19 @@
       ],
       "Hash": "cd9a672193789068eb5a2aad65a0dedf"
     },
+    "callr": {
+      "Package": "callr",
+      "Version": "3.7.6",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "R6",
+        "processx",
+        "utils"
+      ],
+      "Hash": "d7e13f49c19103ece9e58ad2d83a7354"
+    },
     "cdrs": {
       "Package": "cdrs",
       "Version": "0.4.6",
@@ -383,6 +396,19 @@
         "R"
       ],
       "Hash": "411ca2c03b1ce5f548345d2fc2685f7a"
+    },
+    "desc": {
+      "Package": "desc",
+      "Version": "1.4.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "R6",
+        "cli",
+        "utils"
+      ],
+      "Hash": "99b79fcbd6c4d1ce087f5c5c758b384f"
     },
     "digest": {
       "Package": "digest",
@@ -970,6 +996,21 @@
       ],
       "Hash": "15da5a8412f317beeee6175fbc76f4bb"
     },
+    "pkgbuild": {
+      "Package": "pkgbuild",
+      "Version": "1.4.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "R6",
+        "callr",
+        "cli",
+        "desc",
+        "processx"
+      ],
+      "Hash": "a29e8e134a460a01e0ca67a4763c595b"
+    },
     "pkgconfig": {
       "Package": "pkgconfig",
       "Version": "2.0.3",
@@ -980,6 +1021,28 @@
       ],
       "Hash": "01f28d4278f15c76cddbea05899c5d6f"
     },
+    "pkgload": {
+      "Package": "pkgload",
+      "Version": "1.4.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "cli",
+        "desc",
+        "fs",
+        "glue",
+        "lifecycle",
+        "methods",
+        "pkgbuild",
+        "processx",
+        "rlang",
+        "rprojroot",
+        "utils",
+        "withr"
+      ],
+      "Hash": "2ec30ffbeec83da57655b850cf2d3e0e"
+    },
     "prettyunits": {
       "Package": "prettyunits",
       "Version": "1.2.0",
@@ -989,6 +1052,19 @@
         "R"
       ],
       "Hash": "6b01fc98b1e86c4f705ce9dcfd2f57c7"
+    },
+    "processx": {
+      "Package": "processx",
+      "Version": "3.8.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "R6",
+        "ps",
+        "utils"
+      ],
+      "Hash": "0c90a7d71988856bad2a2a45dd871bb9"
     },
     "progress": {
       "Package": "progress",
@@ -1031,6 +1107,17 @@
         "utils"
       ],
       "Hash": "e0ef355c12942cf7a6b91a6cfaea8b3e"
+    },
+    "ps": {
+      "Package": "ps",
+      "Version": "1.7.7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "utils"
+      ],
+      "Hash": "878b467580097e9c383acbb16adab57a"
     },
     "purrr": {
       "Package": "purrr",
