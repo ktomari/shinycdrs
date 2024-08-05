@@ -1,3 +1,7 @@
+# shinycdrs 0.2.3
+
+Fixed text issues in homepage, and corrected dependencies.
+
 # shinycdrs 0.2.2
 
 Fixed bugs that caused error in shinyapps.io.
