@@ -5,26 +5,22 @@ Authors@R: person('Kenji', 'Tomari', email = 'ktomari@ucdavis.edu', role = c('cr
 Description: A shiny app to explore the California Delta Resident's Survey.
 License: GPL (>= 3)
 Imports: 
-    attempt,
-    cdrs (>= 0.4.5),
+    cdrs (>= 0.4.6),
     config (>= 0.3.2),
     dplyr,
-    DT,
     forcats,
-    glue,
     golem (>= 0.4.1),
     gt,
     htmltools,
     magrittr,
-    pkgload,
     purrr,
     readxl,
     sf,
     shiny (>= 1.8.0),
+    shinybrowser,
     shinyMobile (>= 2.0.0),
     stringr,
-    tidyr,
-    tidyselect
+    tidyr
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.1
