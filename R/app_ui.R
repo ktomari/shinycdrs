@@ -32,6 +32,7 @@ golem_add_external_resources <- function() {
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
 #' @import shiny
+#' @import shinybrowser
 #' @noRd
 app_ui <- function(request) {
   shiny::tagList(
@@ -46,10 +47,6 @@ app_ui <- function(request) {
       ),  
       # Layout
       shinyMobile::f7TabLayout(
-        # Add custom CSS for padding
-        # tags$style(
-        #   
-        # ),
         # Layout Navbar
         navbar = shinyMobile::f7Navbar(
           title = "California Delta Residents Survey Data Explorer",

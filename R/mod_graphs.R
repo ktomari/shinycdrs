@@ -11,6 +11,7 @@ mod_graphs_ui <- function(id){
   ns <- shiny::NS(id)
  
   shiny::tagList(
+    # beginning of mod_graphs UI
     shinyMobile::f7Card(
       shinyMobile::f7Select(
         label = "Survey Section",
@@ -31,20 +32,7 @@ mod_graphs_ui <- function(id){
           shinyMobile::f7List(
             shiny::div(
               class = "padded-input",
-              shinyMobile::f7Stepper(
-                inputId = shiny::NS(id, "font_size"),
-                label = "Font Size",
-                min = 10,
-                max = 100,
-                step = 5,
-                size = "small",
-                value = 20,
-                wraps = TRUE,
-                autorepeat = TRUE,
-                rounded = FALSE,
-                raised = FALSE,
-                manual = FALSE
-              )
+              shiny::uiOutput(ns("stepperUI")),
             ),
             shiny::div(
               class = "padded-input",
@@ -76,7 +64,36 @@ mod_graphs_ui <- function(id){
 #' @noRd
 mod_graphs_server <- function(id){
   shiny::moduleServer(id, function(input, output, session){
+    
+    # Modules.
     ns <- session$ns
+    
+    # Render the stepper UI dynamically based on browser width
+    # (Note, this only occurs at start up. 
+    # If you change browser size, you must refresh the page.)
+    output$stepperUI <- shiny::renderUI({
+      width <- shinybrowser::get_width()
+      
+      initial_value <- if (!is.null(width) && 
+                           is.numeric(width) && 
+                           width <= 768) 10 else 20
+      
+      # Create the f7Stepper with the determined initial value
+      shinyMobile::f7Stepper(
+        inputId = ns("font_size"),
+        label = "Font Size",
+        min = 5,
+        max = 100,
+        step = 5,
+        size = "small",
+        value = initial_value, # Set initial value based on screen size
+        wraps = FALSE,
+        autorepeat = TRUE,
+        rounded = FALSE,
+        raised = FALSE,
+        manual = FALSE
+      )
+    })
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # rct_vars ----
@@ -143,6 +160,7 @@ mod_graphs_server <- function(id){
     
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     observe({
+      req(input$font_size)
       # go through each plt prep object...
       purrr::walk(1:length(rct_preps()), function(i) {
         # create an 'output' label
@@ -164,6 +182,7 @@ mod_graphs_server <- function(id){
                        "categorical" = cdrs::cdrs_plt_pie(prep_),
                        "ordinal" = cdrs::cdrs_plt_stacked(prep_),
                        "diverging" = cdrs::cdrs_plt_stacked(prep_),
+                       "numeric" = cdrs::cdrs_plt_hist(prep_),
                        NULL  # Default case if none match
         )
         
