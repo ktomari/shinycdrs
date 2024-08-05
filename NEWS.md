@@ -1,3 +1,7 @@
+# shinycdrs 0.2.2
+
+Fixed bugs that caused error in shinyapps.io.
+
 # shinycdrs 0.2.1
 
 # shinycdrs 0.2.0
