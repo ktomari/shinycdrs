@@ -18,7 +18,6 @@ Imports:
     pkgload,
     purrr,
     readxl,
-    sf,
     shiny (>= 1.8.0),
     shinybrowser,
     shinyMobile (>= 2.0.0),
@@ -33,7 +32,9 @@ Suggests:
     testthat (>= 3.0.0),
     devtools,
     rsconnect,
-    usethis
+    usethis,
+    sf,
+    tigris
 Config/testthat/edition: 3
 Language: en-US
 URL: https://github.com/ktomari/shinycdrs
