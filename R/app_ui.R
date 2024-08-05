@@ -35,7 +35,10 @@ golem_add_external_resources <- function() {
 #' @noRd
 app_ui <- function(request) {
   shiny::tagList(
+    # Add resources (ie. where custom.css and images are located, inst/app/www)
     golem_add_external_resources(),
+    # shinybrowser is used here to get information about the user's device.
+    shinybrowser::detect(),
     # begin shinyMobile page
     shinyMobile::f7Page(
       options = list(
@@ -91,8 +94,6 @@ app_ui <- function(request) {
       )  # END tab layout
     )  # END page
   )  # END tagList
-  
-  
 }
 
 
