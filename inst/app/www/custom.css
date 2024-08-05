@@ -2,6 +2,12 @@
 .padded-input {
         padding: 10px;
       }
+      
+/* Add padding to f7AccordionItem content */
+.accordion-item-content {
+  padding-left: 10px;
+  padding-right: 10px;
+}
 
 /* Image style for home page images */
 .centered-img {
@@ -23,13 +29,4 @@
   .centered-img {
     width: 100%; /* Change width for phones */
   }
-}
-
-/* Padding for all accordion 
-*/
-/* General accordion styling */
-.accordion-item-content {
-  padding-left: 10px;
-  padding-right: 10px;
-  overflow: hidden; /* Ensure content is properly hidden when closed */
 }
