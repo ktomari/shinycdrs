@@ -11,6 +11,20 @@
   width: 50%;
 }
 
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .centered-img {
+    width: 80%; /* Change width for tablets and small screens */
+  }
+}
+
+/* Media query for very small screens */
+@media (max-width: 480px) {
+  .centered-img {
+    width: 100%; /* Change width for phones */
+  }
+}
+
 /* Padding for all accordion 
 */
 /* General accordion styling */
