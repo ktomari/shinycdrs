@@ -10,8 +10,8 @@ home_ <- list(
         'The Sacramento-San Joaquin Delta is the largest estuary on the west coast and the heart of California. The health and well-being of the Delta ecosystem and residents are deeply intertwined. The Delta Residents Survey research project was launched in 2023 by a collaborative group of university partners and California state agencies (California Sea Grant, University of California Davis, University of California Berkeley, Sacramento State University, Oregon State University, and the Delta Stewardship Council) as an effort to measure the well-being of Delta residents and understand how Delta communities are changing over time in response to regional social and environmental changes.'
       ),
       shiny::tags$p(
-        'This website provides an easy-to-navigate tool for exploring the data from the 2023 Delta Residents Survey. Keep reading for more information about the survey or use the tabs at the top of this page to navigate to explore survey results in graphs, tables, and maps. A full report of all survey results can be found ',
-        shinyMobile::f7Link(label = "here", href = "https://www.openicpsr.org/openicpsr/project/195447/version/V2/view?path=/openicpsr/195447/fcr:versions/V2/2023-DRS-Results-Summary-Report.pdf&type=file"),
+        'This website provides an easy-to-navigate tool for exploring the data from the 2023 Delta Residents Survey. Keep reading for more information about the survey or use the tabs at the bottom of this page to navigate survey results in graphs and tables. A detailed study of all survey results can be found in the ',
+        shinyMobile::f7Link(label = "2023 Summary Report", href = "https://www.openicpsr.org/openicpsr/project/195447/version/V2/view?path=/openicpsr/195447/fcr:versions/V2/2023-DRS-Results-Summary-Report.pdf&type=file"),
         '.'
       ),
     )  # END tagList
