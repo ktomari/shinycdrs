@@ -226,9 +226,10 @@ home_ <- list(
         'The research team built this web application (using R Shiny) to provide an easier way to explore the Delta Residents Survey data in an interactive manner. Use the tabs on bottom of this page to see graphs of the results from each survey section; or hit the next tab to create tables that look at cross-sections of the data (e.g., compare responses around which activities respondents enjoy doing for recreation in the Delta (Q8) across different age brackets). As you navigate this site, you will find tooltips',
         shinyMobile::f7Tooltip(
           tag = shinyMobile::f7Badge(
-            "i", 
+            "tip", 
             color = "black",
-            class = "custom-badge-demo"),
+            class = "custom-badge-demo"
+            ),
           text = "Like this one!"
         ),
         ', which you can hover over or tap to get some guidance.'
