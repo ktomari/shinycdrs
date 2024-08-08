@@ -11,8 +11,7 @@ home_ <- list(
       ),
       shiny::tags$p(
         'This website provides an easy-to-navigate tool for exploring the data from the 2023 Delta Residents Survey. Keep reading for more information about the survey or use the tabs at the bottom of this page to navigate survey results in graphs and tables. A detailed study of all survey results can be found in the ',
-        shinyMobile::f7Link(label = "2023 Summary Report", href = "https://www.openicpsr.org/openicpsr/project/195447/version/V2/view?path=/openicpsr/195447/fcr:versions/V2/2023-DRS-Results-Summary-Report.pdf&type=file"),
-        '.'
+        shinyMobile::f7Link(label = "2023 Summary Report.", href = "https://www.openicpsr.org/openicpsr/project/195447/version/V2/view?path=/openicpsr/195447/fcr:versions/V2/2023-DRS-Results-Summary-Report.pdf&type=file")
       ),
     )  # END tagList
   ),
@@ -296,5 +295,16 @@ home_ <- list(
           )
         )
       )  # END tagList
-    ) # END item
-  )
+    ), # END item
+  # 8 ----
+  item8 = list(
+    title = "Site Information",
+    html = shiny::tagList(
+      htmltools::tags$p(
+        "This site was originally created in August of 2024 with the R language (4.1) primarily using two packages for the UI and interactive functionality, shiny (1.8.0) and shinyMobile (2.0.0). The open source code for this web app is available at the ",
+        shinyMobile::f7Link(
+          label = "project github repository.",
+          href = "https://github.com/ktomari/shinycdrs"
+        )
+      )
+  )))
