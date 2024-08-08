@@ -76,6 +76,7 @@ h3 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0; /* Prevent shrinking */
 }
 
 .custom-badge-demo {
