@@ -61,7 +61,12 @@
                 "shiny_parameters.xlsx",
                 package = "shinycdrs"),
     sheet = "crosstabs",
-    col_types = c("text", "text", "logical")
+    col_types = c("text", 
+                  "text", 
+                  "logical", 
+                  "text", 
+                  "text",
+                  "text")
   ) %>%
     dplyr::filter(listed == TRUE)
   
