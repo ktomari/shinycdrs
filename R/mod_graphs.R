@@ -33,13 +33,13 @@ mod_graphs_ui <- function(id){
             class = "full-width-select",
             # Survey Section Selection input
             shinyMobile::f7Select(
-              label = NULL,
+              label = "Survey Sections",
               inputId = shiny::NS(id, "selected_sections"),
               choices = unique(env_dat$params_graphs$block),
               style = list(
-                description = "Survey Section Selection Menu",
+                description = NULL,
                 media = shinyMobile::f7Icon("menu"),
-                outline = TRUE
+                outline = FALSE
               )
             )
           )
