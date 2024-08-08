@@ -1,3 +1,7 @@
+# shinycdrs 0.5.0
+
+Added functionality to make xt tall when on narrow screens. Bugs squashed.
+
 # shinycdrs 0.4.4
 
 # shinycdrs 0.4.3
