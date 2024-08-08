@@ -98,7 +98,7 @@ mod_crosstabs_server <- function(id){
         id = ns("xt_popup"),
         fullsize = F,
         closeOnEscape = TRUE,
-        swipeToClose = TRUE,
+        swipeToClose = FALSE,
         page = TRUE,
         shinyMobile::f7Block(
           htmltools::tags$p(
