@@ -2,7 +2,7 @@
 
 home_ <- list(
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  # 1 ----
+  # 1 Overview ----
   item1 = list(
     title = "Overview",
     html = shiny::tagList(
@@ -18,7 +18,7 @@ home_ <- list(
   ),
   # END item
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  # 2 ----
+  # 2 Who? ----
   item2 = list(
     title = "Who was surveyed?",
     html = shiny::tagList(
@@ -33,7 +33,7 @@ home_ <- list(
   ),
   # END item
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  # 3 ----
+  # 3 About what? ----
   item3 = list(
     title = "What was the survey about?",
     html = shiny::tagList(
@@ -46,7 +46,7 @@ home_ <- list(
   ),
   # END item
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  # 4 ----
+  # 4 Questions ----
   item4 = list(
     title = "Survey Questions",
     html = shiny::tagList(
@@ -178,7 +178,7 @@ home_ <- list(
     )  # END tagList
   ),  # END item
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  # 5 ----
+  # 5 Findings ----
   item5 = list(
     title = "Key Findings",
     html = shiny::tagList(
@@ -218,14 +218,22 @@ home_ <- list(
     )  # END tagList
   ), # END item
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  # 6 ----
+  # 6 Navigation ----
   item6 = list(
-    title = "Navigating this data tool",
+    title = "Navigating This Site",
     html = shiny::tagList(
-      shiny::tags$p(
-        'The research team built this web application (using R Shiny) to provide an easier way to explore the Delta Residents Survey data in an interactive manner. Use the tabs on bottom of this page to see graphs of the results from each survey section; or hit the next tab to create tables that look at cross-sections of the data (e.g., compare responses around which activities respondents enjoy doing for recreation in the Delta (Q8) across different age brackets).'
+      htmltools::tags$p(
+        'The research team built this web application (using R Shiny) to provide an easier way to explore the Delta Residents Survey data in an interactive manner. Use the tabs on bottom of this page to see graphs of the results from each survey section; or hit the next tab to create tables that look at cross-sections of the data (e.g., compare responses around which activities respondents enjoy doing for recreation in the Delta (Q8) across different age brackets). As you navigate this site, you will find tooltips',
+        shinyMobile::f7Tooltip(
+          tag = shinyMobile::f7Badge(
+            "i", 
+            color = "black",
+            class = "custom-badge-demo"),
+          text = "Like this one!"
+        ),
+        ', which you can hover over or tap to get some guidance.'
       ),
-      shiny::tags$p(
+      htmltools::tags$p(
         'Please direct any questions about the development of the Shiny App to Kenji Tomari. (See the ',
         shinyMobile::f7Link(
           label = 'project homepage',
@@ -235,7 +243,7 @@ home_ <- list(
     )  # END tagList
   ), # END item
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  # 7 ----
+  # 7 Other Materials ----
   item7 = list(
     title = "Finding Other Survey Materials",
     html = shiny::tagList(
