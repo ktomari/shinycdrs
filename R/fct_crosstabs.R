@@ -1,23 +1,38 @@
 #' resp_filter 
 #'
-#' @description Help create options for responses to display in the popup menu.
+#' @description Help create options for 'responses' to display in the popup menu.
+#' @param selected_qid character or `NULL`. The purpose of this variable is to simply note that a qid (ie. a response option) has already been selected. In cases where this is `NULL`, the "selected" option will be automatically chosen (ie. the first choice).
+#' @param other_selected_qid character or `NULL`. The purpose of this variable is to reduce total possible options for "choices'. If this variable is a character, then it is the QID/Variable that has already been selected in another f7Select.
+#' @param selected_question character. This is a required variable. It is the "question" (but not the response/QID/Variable). It helps select the question for which we derive response values (ie. choices).
 #'
-#' @return The return value, if any, from executing the function.
+#' @return list with two variables: selected, choice.
 #'
 #' @noRd
 resp_filter <- function(
     selected_qid = NULL,
     other_selected_qid = NULL,
-    selected_question = "Zone"
+    selected_question = NULL
   ){
+  
+  if(inherits(selected_question, "NULL")){
+    return(NULL)
+  }
+  if(length(selected_question) == 0){
+    return(NULL)
+  }
+  if(selected_question == ""){
+    return(NULL)
+  }
   
   # get full suite of response for this question.
   responses <- env_dat$params_crosstabs
   
   # Remove other_selected_qid from possible options
   if(!inherits(other_selected_qid, "NULL")){
-    responses <- responses %>%
-      dplyr::filter(Variable != other_selected_qid)
+    if(length(other_selected_qid) != 0){
+      responses <- responses %>%
+        dplyr::filter(Variable != other_selected_qid)
+    }
   }
   
   # Now filter choices down to the selected question
@@ -25,7 +40,9 @@ resp_filter <- function(
     dplyr::filter(question == selected_question) %>%
     dplyr::select(Variable, full_response)
   
-  # "Variables" like "Zone" should be NA
+  # "Variables" like "Zone" should be NA,
+  # in which case we `return(NULL)` because we do not want
+  # to generate any radio buttons.
   if(NA %in% responses$full_response){
     return(NULL)
   }
