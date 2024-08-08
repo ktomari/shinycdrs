@@ -22,7 +22,7 @@ mod_graphs_ui <- function(id){
           # f7Tooltip positioned to the left
           shinyMobile::f7Tooltip(
             tag = shinyMobile::f7Badge(
-              "i", 
+              "tip", 
               color = "black",
               class = "custom-badge"
             ),
@@ -50,7 +50,7 @@ mod_graphs_ui <- function(id){
           # f7Tooltip positioned to the left
           shinyMobile::f7Tooltip(
             tag = shinyMobile::f7Badge(
-              "i", 
+              "tip", 
               color = "black",
               class = "custom-badge"
             ),
