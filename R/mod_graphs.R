@@ -9,52 +9,91 @@
 #' @importFrom shiny NS tagList
 mod_graphs_ui <- function(id){
   ns <- shiny::NS(id)
- 
+  
   shiny::tagList(
-    # beginning of mod_graphs UI
+    # Beginning of mod_graphs UI
     shinyMobile::f7Card(
-      shinyMobile::f7Select(
-        label = "Survey Section",
-        inputId = shiny::NS(id, "selected_sections"),
-        choices = unique(env_dat$params_graphs$block),
-        style = list(
+      # Main container for stacked divs
+      htmltools::div(
+        class = "stacked-container",
+        # Survey Section + Tooltip div
+        htmltools::div(
+          class = "select-container",
+          # f7Tooltip positioned to the left
+          shinyMobile::f7Tooltip(
+            tag = shinyMobile::f7Badge(
+              "i", 
+              color = "black",
+              class = "custom-badge"
+            ),
+            text = "This dropdown menu allows you to pick a thematic section of the 2023 Delta Residents Survey. Scroll down to see graphs for the survey questions in the selected section."
+          ),
+          # Survey Section Selection input with full width
+          htmltools::div(
+            class = "full-width-select",
+            # Survey Section Selection input
+            shinyMobile::f7Select(
+              label = "Survey Section",
+              inputId = shiny::NS(id, "selected_sections"),
+              choices = unique(env_dat$params_graphs$block),
+              style = list(
                 description = NULL,
                 media = shinyMobile::f7Icon("menu"),
                 outline = FALSE
               )
-      ),
-      footer = shinyMobile::f7Accordion(
-        id = "graph_accordion",
-        side = "left",
-        shinyMobile::f7AccordionItem(
-          title = "Plot Options",
-          open = FALSE,
-          shinyMobile::f7List(
-            shiny::div(
-              class = "padded-input",
-              shiny::uiOutput(ns("stepperUI")),
-            ),
-            shiny::div(
-              class = "padded-input",
-              shinyMobile::f7Stepper(
-                inputId = shiny::NS(id, "plotHeight"),
-                label = "Plot Height (px)",
-                min = 400,
-                max = 1000,
-                step = 75,
-                size = "small",
-                value = 475,
-                wraps = FALSE,
-                autorepeat = TRUE,
-                rounded = FALSE,
-                raised = FALSE,
-                manual = FALSE
-              )
             )
           )
-        )
-      ),  # END accordion
-    ),
+        ),
+        # Footer for accordion section
+        htmltools::div(
+          class = "accordion-container",
+          # f7Tooltip positioned to the left
+          shinyMobile::f7Tooltip(
+            tag = shinyMobile::f7Badge(
+              "i", 
+              color = "black",
+              class = "custom-badge"
+            ),
+            text = "Plot options allow you to adjust the size of the font and overall plot height to accommodate various screen sizes."
+          ),
+          # Accordion container
+          htmltools::div(
+            class = "full-width-accordion",
+            shinyMobile::f7Accordion(
+              id = "graph_accordion",
+              side = "left",
+              shinyMobile::f7AccordionItem(
+                title = "Plot Options",
+                open = FALSE,
+                shinyMobile::f7List(
+                  shiny::div(
+                    class = "padded-input",
+                    shiny::uiOutput(ns("stepperUI"))
+                  ),
+                  shiny::div(
+                    class = "padded-input",
+                    shinyMobile::f7Stepper(
+                      inputId = shiny::NS(id, "plotHeight"),
+                      label = "Plot Height (px)",
+                      min = 250,
+                      max = 1000,
+                      step = 75,
+                      size = "small",
+                      value = 475,
+                      wraps = FALSE,
+                      autorepeat = TRUE,
+                      rounded = FALSE,
+                      raised = FALSE,
+                      manual = TRUE
+                    )
+                  )
+                )  # END f7List
+              )  # END accordion item
+            )  # END accordion
+          )  # END div (for full-width-accordion)
+        )  # END div (for accordion-container)
+      )  # END div (for stacked-container)
+    ),  # END f7Card
     shiny::uiOutput(ns("graph_cards"))
   )  # END taglist
 }
@@ -68,6 +107,7 @@ mod_graphs_server <- function(id){
     # Modules.
     ns <- session$ns
     
+    # font size stepper ----
     # Render the stepper UI dynamically based on browser width
     # (Note, this only occurs at start up. 
     # If you change browser size, you must refresh the page.)
@@ -91,7 +131,7 @@ mod_graphs_server <- function(id){
         autorepeat = TRUE,
         rounded = FALSE,
         raised = FALSE,
-        manual = FALSE
+        manual = TRUE
       )
     })
 
