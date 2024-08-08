@@ -241,14 +241,14 @@
     },
     "cdrs": {
       "Package": "cdrs",
-      "Version": "0.4.6",
+      "Version": "0.5.0",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "ktomari",
       "RemoteRepo": "cdrs",
       "RemoteRef": "master",
-      "RemoteSha": "aadbdc19065322d5576f3a6d1d14e17c7df0893b",
+      "RemoteSha": "b762670d3ff783e7fefd8039881048ee0d2382d0",
       "Requirements": [
         "R",
         "digest",
@@ -270,7 +270,7 @@
         "tidyselect",
         "utils"
       ],
-      "Hash": "8b45ee91af2a43c9a8ea942d6c5ae85e"
+      "Hash": "c08302d2739617523f555671427218e9"
     },
     "cellranger": {
       "Package": "cellranger",
