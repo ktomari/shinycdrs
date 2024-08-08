@@ -6,7 +6,7 @@ Description: A shiny app to explore the California Delta Resident's Survey.
 License: GPL (>= 3)
 Imports: 
     attempt,
-    cdrs (>= 0.5.0),
+    cdrs (>= 0.5.2),
     config (>= 0.3.2),
     dplyr,
     forcats,
