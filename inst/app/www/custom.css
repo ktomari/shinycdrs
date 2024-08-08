@@ -156,3 +156,8 @@ h3 {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.accordion-item-with-icon {
+  display: flex;
+  align-items: center;
+}
