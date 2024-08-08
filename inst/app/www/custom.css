@@ -120,3 +120,17 @@ h3 {
 .custom-button {
       margin-left: 10px;
     }
+    
+/* for the radio buttons */
+.list .item-title {
+  white-space: normal !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* tooltip */
+.badge.tooltip-init {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10+ and Edge */
+  user-select: none; /* Standard syntax */
+}
