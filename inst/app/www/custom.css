@@ -1,3 +1,35 @@
+.navbar .title {
+          font-family: 'Roboto Slab', serif;
+          font-weight: 700;
+        }
+        
+p {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+}
+
+small {
+  font-family: 'Montserrat', sans-serif;
+}
+
+h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+}
+
+.input-select {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.item-text {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.item-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+}
+
 /* Padding for shinyMobile inputs */
 .padded-input {
         padding: 10px;
@@ -30,3 +62,61 @@
     width: 100%; /* Change width for phones */
   }
 }
+
+/* Font and Badge Style */
+.custom-badge {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 700;
+  margin-right: 10px; /* Space between badge and label */
+  cursor: pointer; /* Change cursor to pointer */
+}
+
+.custom-badge-demo {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 700;
+  cursor: pointer; /* Change cursor to pointer */
+}
+
+.tooltip-badge-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* Ensure it takes full height of the parent container */
+}
+
+/* Full Width Select Style */
+.full-width-select .item-input-wrap {
+  width: 100%;
+}
+
+/* Container for Stacked Elements */
+.stacked-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Controls the space between stacked divs */
+  width: 100%;
+}
+
+/* Style for Select and Accordion Containers */
+.select-container, .accordion-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Select and Accordion Style for Full Width */
+.select-container .full-width-select,
+.accordion-container .full-width-accordion {
+  flex-grow: 1;
+}
+
+.f7-block {
+      display: flex;
+      align-items: center;
+    }
+
+.custom-button {
+      margin-left: 10px;
+    }
