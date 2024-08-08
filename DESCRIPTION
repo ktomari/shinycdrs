@@ -10,6 +10,7 @@ Imports:
     config (>= 0.3.2),
     dplyr,
     forcats,
+    gfonts,
     glue,
     golem (>= 0.4.1),
     gt,
