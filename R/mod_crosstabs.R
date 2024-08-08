@@ -84,12 +84,14 @@ mod_crosstabs_server <- function(id){
   shiny::moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # rV: selected QIDs ----
     # Reactive value to store selected items
     selected_qid1 <- shiny::reactiveVal(NULL)
     selected_qid2 <- shiny::reactiveVal(NULL)
+    on_startup <- shiny::reactiveVal(TRUE)
     
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # oE: popup ----
     observeEvent(input$xt_options, {
       shinyMobile::f7Popup(
@@ -124,6 +126,7 @@ mod_crosstabs_server <- function(id){
       )
     })
     
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # oE: q1 ----
     shiny::observeEvent(list(input$q1, input$q1_radio), {
       # Filter out radio selection which is a full_response
@@ -132,9 +135,14 @@ mod_crosstabs_server <- function(id){
         response_ = input$q1_radio
       )
       
+      if(length(qid) != 1){
+        qid <- NULL
+      }
+      
       selected_qid1(qid)
     })
     
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # oE: q2 ----
     shiny::observeEvent(list(input$q2, input$q2_radio), {
       # Filter out radio selection which is a full_response
@@ -143,9 +151,14 @@ mod_crosstabs_server <- function(id){
         response_ = input$q2_radio
       )
       
+      if(length(qid) != 1){
+        qid <- NULL
+      }
+      
       selected_qid2(qid)
     })
     
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # q1 resp ----
     output$q1_response_selection <- shiny::renderUI({
       shiny::req(input$q1)  # Ensure there is a selection
@@ -160,6 +173,11 @@ mod_crosstabs_server <- function(id){
         return(NULL)
       }
       
+      if(length(l$selected) == 0 |
+         length(l$choices) == 0){
+        return(NULL)
+      }
+      
       shinyMobile::f7Radio(
         inputId = ns("q1_radio"),
         label = paste("Responses for", input$q1),
@@ -168,6 +186,7 @@ mod_crosstabs_server <- function(id){
       )
     })
     
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # q2 resp ----
     output$q2_response_selection <- shiny::renderUI({
       shiny::req(input$q2)  # Ensure there is a selection
@@ -182,6 +201,11 @@ mod_crosstabs_server <- function(id){
         return(NULL)
       }
       
+      if(length(l$selected) == 0 |
+         length(l$choices) == 0){
+        return(NULL)
+      }
+      
       shinyMobile::f7Radio(
         inputId = ns("q2_radio"),
         label = paste("Responses for", input$q2),
@@ -190,6 +214,7 @@ mod_crosstabs_server <- function(id){
       )
       })
 
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # output$prompt_label ----
     output$prompt_label <- shiny::renderUI({
       c1 <- selected_qid1()
@@ -235,7 +260,16 @@ mod_crosstabs_server <- function(id){
       # RETURN
       htmltools::HTML(out)
     })
+    
+    observe({
+      if(on_startup()){
+        selected_qid1("Zone")
+        selected_qid2("Q1_1")
+        on_startup(FALSE)
+      }
+    })
 
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # output$table ----
     output$table <- gt::render_gt({
       
@@ -243,10 +277,26 @@ mod_crosstabs_server <- function(id){
       c2 <- selected_qid2()
       
       if(inherits(c1, "NULL") | 
-         inherits(c2, "NULL")){
-        c1 <- "Zone"
-        c2 <- "Q1_1"
+         inherits(c2, "NULL")) {
+        # These values are NULL, and 
+        # startup already happened,
+        # so return NULL
+        return(NULL)
+        
+      } else if(length(c1) == 0 |
+                length(c2) == 0){
+        # If for some reason character() was passed to 
+        # either c1 or c2, we can't do anything with it
+        # so return NULL
+        return(NULL)
       }
+      
+      # Let's automatically decide between a tall or wide table.
+      width <- shinybrowser::get_width()
+      
+      order_by_ <- if (!is.null(width) && 
+                           is.numeric(width) && 
+                           width <= 768) "tall" else "rank"
 
       prep_ <- cdrs::cdrs_gt_prep(
         data_ = env_dat$dat$data,
@@ -255,6 +305,7 @@ mod_crosstabs_server <- function(id){
         dict_ = env_dat$dat$dict,
         add_labs = TRUE,
         add_title = TRUE,
+        order_by = order_by_,
         label_threshold = 20
       )
         
