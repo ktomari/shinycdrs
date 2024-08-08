@@ -23,7 +23,15 @@ golem_add_external_resources <- function() {
     # Link to custom CSS file
     tags$link(rel = "stylesheet", 
               type = "text/css", 
-              href = "www/custom.css")
+              href = "www/custom.css"),
+    # Link to roboto-slab CSS file
+    tags$link(rel = "stylesheet", 
+              type = "text/css", 
+              href = "www/css/roboto-slab.css"),
+    # Link to montserrat CSS file
+    tags$link(rel = "stylesheet", 
+              type = "text/css", 
+              href = "www/css/montserrat.css")
   )
 }
 
@@ -45,13 +53,12 @@ app_ui <- function(request) {
       options = list(
         dark = FALSE  # Set the default theme to light
       ),
-      # Add Google Font in the header
-      tags$head(
-        tags$link(
-          href = "https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400&family=Montserrat:wght@500;800&display=swap",
-          rel = "stylesheet"
-        )
-      ),
+      # Add Google Font
+      # (Note, the tags$link method does not work on shinyapps.io)
+      gfonts::use_font("roboto-slab",  
+                       app_sys("app/www/css/roboto-slab.css")),
+      gfonts::use_font("montserrat", 
+                       app_sys("app/www/css/montserrat.css")),
       # Layout
       shinyMobile::f7TabLayout(
         # Layout Navbar
