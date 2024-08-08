@@ -1,3 +1,7 @@
+# shinycdrs 0.4.0
+
+Added google fonts to (theoretically) work on shinyapps.io. Fixed issue with tooltip where you would select the "i" in the badge while trying to read tip. Fixed text wrap for radio buttons.
+
 # shinycdrs 0.3.1
 
 # shinycdrs 0.3.0
