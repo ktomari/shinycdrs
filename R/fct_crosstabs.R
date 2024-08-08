@@ -94,3 +94,35 @@ filter_params <- function(
     dplyr::filter(full_response == response_) %>%
     dplyr::pull(Variable)
 }
+
+#' Sort variables vector
+#' 
+#' @param vars character
+#' @return character
+#' @noRd
+sort_vars <- function(
+    vars
+){
+  # Separate numbered and non-numbered elements
+  numbered <- grep("^\\d{1,2}[[:alpha:]]*\\.", vars, value = TRUE)
+  non_numbered <- grep("^\\d{1,2}[[:alpha:]]*\\.", vars, value = TRUE, invert = TRUE)
+  
+  # Extract the numeric part for sorting
+  extract_num <- function(x) {
+    sub("^([0-9]+).*", "\\1", x)
+  }
+  
+  # Extract the alphabetical part for sorting
+  extract_alpha <- function(x) {
+    sub("^[0-9]+([a-z]?).*", "\\1", x)
+  }
+  
+  # Sort numbered elements
+  numbered_sorted <- numbered[order(as.numeric(sapply(numbered, extract_num)), sapply(numbered, extract_alpha))]
+  
+  # Sort non-numbered elements
+  non_numbered_sorted <- sort(non_numbered)
+  
+  # Combine the sorted parts
+  c(numbered_sorted, non_numbered_sorted)
+}
