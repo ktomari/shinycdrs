@@ -44,7 +44,14 @@ app_ui <- function(request) {
     shinyMobile::f7Page(
       options = list(
         dark = FALSE  # Set the default theme to light
-      ),  
+      ),
+      # Add Google Font in the header
+      tags$head(
+        tags$link(
+          href = "https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400&family=Montserrat:wght@500;800&display=swap",
+          rel = "stylesheet"
+        )
+      ),
       # Layout
       shinyMobile::f7TabLayout(
         # Layout Navbar
