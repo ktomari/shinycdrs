@@ -16,19 +16,23 @@ mod_crosstabs_ui <- function(id){
         htmltools::div(
           shinyMobile::f7Tooltip(
             tag = shinyMobile::f7Badge(
-              "i", 
+              "tip", 
               color = "black",
               class = "custom-badge"
             ),
-            text = "Click the Options button to begin. This opens a popup window which allows you to select two survey question responses you would like to compare. Begin by selecting the survey question. If applicable, select a response from the available set of radio buttons."
+            text = "Click the \"Variable Selector\" button to begin. This opens a popup window which allows you to select two survey question responses you would like to compare. Begin by selecting the survey question. If applicable, select a response from the available set of radio buttons."
           )
         ),
         htmltools::div(
           style = "flex-grow: 1;",
           shinyMobile::f7Button(
             inputId = shiny::NS(id, "xt_options"),
-            label = "Options Panel",
-            rounded = TRUE
+            label = "Variable Selector",
+            rounded = TRUE,
+            outline = FALSE,
+            fill = FALSE,
+            tonal = TRUE,
+            icon = shinyMobile::f7Icon("bars")
           )
         )
       )
@@ -88,11 +92,16 @@ mod_crosstabs_server <- function(id){
         closeOnEscape = TRUE,
         swipeToClose = TRUE,
         page = TRUE,
+        shinyMobile::f7Block(
+          htmltools::tags$p(
+            "Please select two variables and any corresponding response levels."
+          )
+        ),
         shinyMobile::f7Card(
           shinyMobile::f7Select(
             inputId = ns("q1"),
             label = "Select Variable 1",
-            choices = unique(env_dat$params_crosstabs$question),
+            choices = sort_vars(unique(env_dat$params_crosstabs$question)),
             selected = "Zone"
           ),
           shiny::uiOutput(ns("q1_response_selection"))
@@ -101,7 +110,7 @@ mod_crosstabs_server <- function(id){
           shinyMobile::f7Select(
             inputId = ns("q2"),
             label = "Select Variable 2",
-            choices = unique(env_dat$params_crosstabs$question),
+            choices = sort_vars(unique(env_dat$params_crosstabs$question)),
             selected = "1. General Relation to the Delta"
           ),
           shiny::uiOutput(ns("q2_response_selection"))
