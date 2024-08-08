@@ -33,13 +33,13 @@ mod_graphs_ui <- function(id){
             class = "full-width-select",
             # Survey Section Selection input
             shinyMobile::f7Select(
-              label = "Survey Section",
+              label = NULL,
               inputId = shiny::NS(id, "selected_sections"),
               choices = unique(env_dat$params_graphs$block),
               style = list(
-                description = NULL,
+                description = "Survey Section Selection Menu",
                 media = shinyMobile::f7Icon("menu"),
-                outline = FALSE
+                outline = TRUE
               )
             )
           )
@@ -63,7 +63,14 @@ mod_graphs_ui <- function(id){
               id = "graph_accordion",
               side = "left",
               shinyMobile::f7AccordionItem(
-                title = "Plot Options",
+                title = htmltools::div(
+                  class = "accordion-item-with-icon",
+                  shinyMobile::f7Icon(
+                    "slider_horizontal_3",
+                    style = "font-size: 20px; margin-right: 8px;"
+                    ),
+                  htmltools::span("Plot Options")
+                ),
                 open = FALSE,
                 shinyMobile::f7List(
                   shiny::div(

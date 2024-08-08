@@ -20,20 +20,24 @@ mod_crosstabs_ui <- function(id){
               color = "black",
               class = "custom-badge"
             ),
-            text = "Click the \"Variable Selector\" button to begin. This opens a popup window which allows you to select two survey question responses you would like to compare. Begin by selecting the survey question. If applicable, select a response from the available set of radio buttons."
+            text = "Click the ellipsis (ie. the \"Variable Selector\") button to the right to begin. This opens a popup window which allows you to select two survey question responses you would like to compare. Begin by selecting the survey question. If applicable, select a response from the available set of radio buttons."
           )
         ),
         htmltools::div(
           style = "flex-grow: 1;",
-          shinyMobile::f7Button(
-            inputId = shiny::NS(id, "xt_options"),
-            label = "Variable Selector",
-            rounded = TRUE,
-            outline = FALSE,
-            fill = FALSE,
-            tonal = TRUE,
-            icon = shinyMobile::f7Icon("bars")
+          shinyMobile::f7Tooltip(
+            tag = shinyMobile::f7Button(
+              inputId = shiny::NS(id, "xt_options"),
+              label = NULL,
+              rounded = TRUE,
+              outline = FALSE,
+              fill = FALSE,
+              tonal = TRUE,
+              icon = shinyMobile::f7Icon("ellipsis")
+            ),
+            text = "Variable Selector"
           )
+          
         )
       )
     ),
@@ -44,27 +48,29 @@ mod_crosstabs_ui <- function(id){
         class = "custom-text-output"
         )
     ),
-    shinyMobile::f7Accordion(
-      side = "left",
-      shinyMobile::f7AccordionItem(
-        title = "About This Table",
-        open = FALSE,
-        htmltools::tags$p(
-          "This \"cross-tabulation table\" is used to compare two survey questions or, in some cases, different options from response items within a question, such as one of the several ways residents relate to the Delta. In technical terms, this table represents a two-way weighted cross-tabulation. Weighting allows us to correct for biases that may arise from the survey sampling process, such as the common survey issue of the overrepresentation of \"female\" respondents, so that we can report survey results that are representative of the sentiments of the full Delta population (with 95% confidence)."
-        ),
-        htmltools::tags$p(
-          "The cells in the table display the percentage of survey respondents that fall into each intersection (or \"cross\") of the two categories. For example, a cell might show the percentage of \"male\" respondents \"feel attached to the natural environment of the Delta\". By presenting weighted frequencies, the crosstab tables indicate the estimated percentage of the TOTAL Delta population that fall into each intersection. For the same example, our results indicate that 22% of Delta residents are males that identify as attached to the natural environment of the Delta."
-        ),
-        htmltools::tags$p(
-          "The sum of all percentages displayed in the body of the table equals 100% of the surveyed population, ensuring that all responses are accounted for. In contrast, the percentages in the bottom row, labeled \"Sum,\" indicate the total percentage of respondents in each column category, such as the total percentage of \"male\" respondents (48%) or \"female\" respondents (52%). The percentages in the far right column, labeled \"Sum\", indicate the total percentage of respondents in each row category, such as the total percentage of residents who feel attached to the natural environment (40%), or not (60%). This provides a quick overview of the distribution of responses across each category and helps identify trends or patterns that should be reflective of the Delta population at large."
-        ),
-        htmltools::tags$p(
-          "The data comes from the 2023 California Delta Residents survey. For more information please visit the ",
-          shinyMobile::f7Link(
-            label = "project homepage",
-            href = "https://ktomari.github.io/DeltaResidentsSurvey/"
+    shinyMobile::f7Card(
+      shinyMobile::f7Accordion(
+        side = "left",
+        shinyMobile::f7AccordionItem(
+          title = "About This Table",
+          open = FALSE,
+          htmltools::tags$p(
+            "This \"cross-tabulation table\" is used to compare two survey questions or, in some cases, different options from response items within a question, such as one of the several ways residents relate to the Delta. In technical terms, this table represents a two-way weighted cross-tabulation. Weighting allows us to correct for biases that may arise from the survey sampling process, such as the common survey issue of the overrepresentation of \"female\" respondents, so that we can report survey results that are representative of the sentiments of the full Delta population (with 95% confidence)."
           ),
-          ", which includes links to the data and the open source code used in this web app."
+          htmltools::tags$p(
+            "The cells in the table display the percentage of survey respondents that fall into each intersection (or \"cross\") of the two categories. For example, a cell might show the percentage of \"male\" respondents \"feel attached to the natural environment of the Delta\". By presenting weighted frequencies, the crosstab tables indicate the estimated percentage of the TOTAL Delta population that fall into each intersection. For the same example, our results indicate that 22% of Delta residents are males that identify as attached to the natural environment of the Delta."
+          ),
+          htmltools::tags$p(
+            "The sum of all percentages displayed in the body of the table equals 100% of the surveyed population, ensuring that all responses are accounted for. In contrast, the percentages in the bottom row, labeled \"Sum,\" indicate the total percentage of respondents in each column category, such as the total percentage of \"male\" respondents (48%) or \"female\" respondents (52%). The percentages in the far right column, labeled \"Sum\", indicate the total percentage of respondents in each row category, such as the total percentage of residents who feel attached to the natural environment (40%), or not (60%). This provides a quick overview of the distribution of responses across each category and helps identify trends or patterns that should be reflective of the Delta population at large."
+          ),
+          htmltools::tags$p(
+            "The data comes from the 2023 California Delta Residents survey. For more information please visit the ",
+            shinyMobile::f7Link(
+              label = "project homepage",
+              href = "https://ktomari.github.io/DeltaResidentsSurvey/"
+            ),
+            ", which includes links to the data and the open source code used in this web app."
+          )
         )
       )
     )
