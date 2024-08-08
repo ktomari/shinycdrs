@@ -1,3 +1,5 @@
+# shinycdrs 0.3.1
+
 # shinycdrs 0.3.0
 
 Some considerable changes. Added tooltips, and changed crosstabs input to be more accessible.
