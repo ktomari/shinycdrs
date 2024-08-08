@@ -1,3 +1,7 @@
+# shinycdrs 0.3.0
+
+Some considerable changes. Added tooltips, and changed crosstabs input to be more accessible.
+
 # shinycdrs 0.2.3
 
 Fixed text issues in homepage, and corrected dependencies.
