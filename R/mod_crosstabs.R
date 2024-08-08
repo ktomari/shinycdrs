@@ -10,43 +10,57 @@
 mod_crosstabs_ui <- function(id){
   ns <- shiny::NS(id)
   htmltools::tagList(
-    shinyMobile::f7Card(
-      div(
-        class = "selection-label",
-        "Select two options:"  # Standalone label text
-      ),
-      shinyMobile::f7SmartSelect(
-        inputId = shiny::NS(id, "xtvars"),
-        label = NULL,
-        choices = unique(env_dat$params_crosstabs$short_title),
-        selected = c("1. General Relation to the Delta - Resident",
-                     "Zone"),
-        multiple = TRUE,
-        maxLength = 2,
-        searchbar = TRUE,
-        openIn = "sheet"
+    shinyMobile::f7Block(
+      htmltools::div(
+        style = "display: flex; align-items: center;",
+        htmltools::div(
+          shinyMobile::f7Tooltip(
+            tag = shinyMobile::f7Badge(
+              "i", 
+              color = "black",
+              class = "custom-badge"
+            ),
+            text = "Click the Options button to begin. This opens a popup window which allows you to select two survey question responses you would like to compare. Begin by selecting the survey question. If applicable, select a response from the available set of radio buttons."
+          )
+        ),
+        htmltools::div(
+          style = "flex-grow: 1;",
+          shinyMobile::f7Button(
+            inputId = shiny::NS(id, "xt_options"),
+            label = "Options Panel",
+            rounded = TRUE
+          )
+        )
       )
     ),
-    # Placeholder for the DT table
     shinyMobile::f7Card(
-      # htmltools::div(
       gt::gt_output(shiny::NS(id, "table")),
-        # class = "custom-gt-output"),
       footer = htmltools::div(
         shiny::uiOutput(shiny::NS(id, "prompt_label")),
-        class = "custom-text-output")
+        class = "custom-text-output"
+        )
     ),
     shinyMobile::f7Accordion(
       side = "left",
       shinyMobile::f7AccordionItem(
         title = "About This Table",
         open = FALSE,
-        htmltools::HTML(
-          paste0('<p>This "cross-tabulation table" is used to compare two survey questions or, in some cases, different options from survey variables, such as one of the several ways residents relate to the Delta. In technical terms, this table represents a two-way weighted cross-tabulation. Weighting allows us to correct for biases that may arise from the survey sampling process, such as the common survey issue of the overrepresentation of "female" respondents.</p>',
-          '<p>The cells in the table display both the count and the percentage of the overall population that falls into each intersection (or "cross") of the two categories. For example, a cell might show the number and percentage of "male" respondents who identify as Delta residents. The sum of all percentages displayed in the body of the table equals 100% of the surveyed population, ensuring that all responses are accounted for.</p>',
-          '<p>In contrast, the percentages in the bottom row, labeled "Sum," indicate the total percentage of respondents in each column category, such as the total number of "male" respondents. This provides a quick overview of the distribution of responses across each category and helps identify trends or patterns within the survey data.</p>',
-          '<p>The data comes from the 2023 California Delta Residents survey. For more information please visit the <a href="https://ktomari.github.io/DeltaResidentsSurvey/">project homepage</a>, which includes links to the data and the open source code used in this web app.</p>'
-                 )
+        htmltools::tags$p(
+          "This \"cross-tabulation table\" is used to compare two survey questions or, in some cases, different options from response items within a question, such as one of the several ways residents relate to the Delta. In technical terms, this table represents a two-way weighted cross-tabulation. Weighting allows us to correct for biases that may arise from the survey sampling process, such as the common survey issue of the overrepresentation of \"female\" respondents, so that we can report survey results that are representative of the sentiments of the full Delta population (with 95% confidence)."
+        ),
+        htmltools::tags$p(
+          "The cells in the table display the percentage of survey respondents that fall into each intersection (or \"cross\") of the two categories. For example, a cell might show the percentage of \"male\" respondents “feel attached to the natural environment of the Delta”. By presenting weighted frequencies, the crosstab tables indicate the estimated percentage of the TOTAL Delta population that fall into each intersection. For the same example, our results indicate that 22% of Delta residents are males that identify as attached to the natural environment of the Delta."
+        ),
+        htmltools::tags$p(
+          "The sum of all percentages displayed in the body of the table equals 100% of the surveyed population, ensuring that all responses are accounted for. In contrast, the percentages in the bottom row, labeled \"Sum,\" indicate the total percentage of respondents in each column category, such as the total percentage of \"male\" respondents (48%) or “female” respondents (52%). The percentages in the far right column, labeled “Sum”, indicate the total percentage of respondents in each row category, such as the total percentage of residents who feel attached to the natural environment (40%), or not (60%). This provides a quick overview of the distribution of responses across each category and helps identify trends or patterns that should be reflective of the Delta population at large."
+        ),
+        htmltools::tags$p(
+          "The data comes from the 2023 California Delta Residents survey. For more information please visit the ",
+          shinyMobile::f7Link(
+            label = "project homepage",
+            href = "https://ktomari.github.io/DeltaResidentsSurvey/"
+          ),
+          ", which includes links to the data and the open source code used in this web app."
         )
       )
     )
@@ -59,27 +73,120 @@ mod_crosstabs_ui <- function(id){
 mod_crosstabs_server <- function(id){
   shiny::moduleServer( id, function(input, output, session){
     ns <- session$ns
-
-    # rct_vars ----
-    rct_vars <- reactive({
-      if(length(input$xtvars) == 2){
-      vars_ <- env_dat$params_crosstabs %>%
-        dplyr::filter(short_title %in% input$xtvars) %>%
-        dplyr::pull(Variable) %>%
-        unique()
-
-      # return
-      vars_
-      }
+    
+    
+    # rV: selected QIDs ----
+    # Reactive value to store selected items
+    selected_qid1 <- shiny::reactiveVal(NULL)
+    selected_qid2 <- shiny::reactiveVal(NULL)
+    
+    # oE: popup ----
+    observeEvent(input$xt_options, {
+      shinyMobile::f7Popup(
+        id = ns("xt_popup"),
+        fullsize = F,
+        closeOnEscape = TRUE,
+        swipeToClose = TRUE,
+        page = TRUE,
+        shinyMobile::f7Card(
+          shinyMobile::f7Select(
+            inputId = ns("q1"),
+            label = "Select Variable 1",
+            choices = unique(env_dat$params_crosstabs$question),
+            selected = "Zone"
+          ),
+          shiny::uiOutput(ns("q1_response_selection"))
+        ),
+        shinyMobile::f7Card(
+          shinyMobile::f7Select(
+            inputId = ns("q2"),
+            label = "Select Variable 2",
+            choices = unique(env_dat$params_crosstabs$question),
+            selected = "1. General Relation to the Delta"
+          ),
+          shiny::uiOutput(ns("q2_response_selection"))
+        ) 
+      )
     })
+    
+    # oE: q1 ----
+    shiny::observeEvent(list(input$q1, input$q1_radio), {
+      # Filter out radio selection which is a full_response
+      qid <- filter_params(
+        question_ = input$q1,
+        response_ = input$q1_radio
+      )
+      
+      selected_qid1(qid)
+    })
+    
+    # oE: q2 ----
+    shiny::observeEvent(list(input$q2, input$q2_radio), {
+      # Filter out radio selection which is a full_response
+      qid <- filter_params(
+        question_ = input$q2,
+        response_ = input$q2_radio
+      )
+      
+      selected_qid2(qid)
+    })
+    
+    # q1 resp ----
+    output$q1_response_selection <- shiny::renderUI({
+      shiny::req(input$q1)  # Ensure there is a selection
+      
+      l <- resp_filter(
+        selected_qid = selected_qid1(),
+        other_selected_qid = selected_qid2(),
+        selected_question = input$q1
+      )
+      
+      if(!inherits(l, "list")){
+        return(NULL)
+      }
+      
+      shinyMobile::f7Radio(
+        inputId = ns("q1_radio"),
+        label = paste("Responses for", input$q1),
+        choices = l$choices,
+        selected = l$selected
+      )
+    })
+    
+    # q2 resp ----
+    output$q2_response_selection <- shiny::renderUI({
+      shiny::req(input$q2)  # Ensure there is a selection
+      
+      l <- resp_filter(
+        selected_qid = selected_qid2(),
+        other_selected_qid = selected_qid1(),
+        selected_question = input$q2
+      )
+      
+      if(!inherits(l, "list")){
+        return(NULL)
+      }
+      
+      shinyMobile::f7Radio(
+        inputId = ns("q2_radio"),
+        label = paste("Responses for", input$q2),
+        choices = l$choices,
+        selected = l$selected
+      )
+      })
 
     # output$prompt_label ----
     output$prompt_label <- shiny::renderUI({
-      vars_ <- rct_vars()
-
-      if(length(vars_) != 2){
-        return(NULL)
+      c1 <- selected_qid1()
+      c2 <- selected_qid2()
+      
+      if(inherits(c1, "NULL") & 
+         inherits(c2, "NULL")){
+        c1 <- "Zone"
+        c2 <- "Q1_1"
       }
+      
+      vars_ <- c(c1, c2)
 
       out <- env_dat$dat$dict %>%
         dplyr::filter(Variable %in% vars_) %>%
@@ -96,11 +203,11 @@ mod_crosstabs_server <- function(id){
         })) %>%
         dplyr::select(Variable, output) %>%
         dplyr::filter(output != "")
-      
+
       out <- out$output %>%
         unique() %>%
         paste0(collapse = '</li><li>')
-      
+
       out <- paste0(
         "<b>Full survey questions:</b><br>",
         "<ul>",
@@ -115,23 +222,26 @@ mod_crosstabs_server <- function(id){
     })
 
     # output$table ----
-    # Render the DT table DT::renderDT
     output$table <- gt::render_gt({
-        vars_ <- rct_vars()
+      
+      c1 <- selected_qid1()
+      c2 <- selected_qid2()
+      
+      if(inherits(c1, "NULL") | 
+         inherits(c2, "NULL")){
+        c1 <- "Zone"
+        c2 <- "Q1_1"
+      }
 
-        if(length(vars_) != 2){
-          return(NULL)
-        }
-
-        prep_ <- cdrs::cdrs_gt_prep(
-          data_ = env_dat$dat$data,
-          col1 = vars_[1],
-          col2 = vars_[2],
-          dict_ = env_dat$dat$dict,
-          add_labs = TRUE,
-          add_title = TRUE,
-          label_threshold = 20
-        )
+      prep_ <- cdrs::cdrs_gt_prep(
+        data_ = env_dat$dat$data,
+        col1 = c1,
+        col2 = c2,
+        dict_ = env_dat$dat$dict,
+        add_labs = TRUE,
+        add_title = TRUE,
+        label_threshold = 20
+      )
         
         gt_ <- cdrs::cdrs_gt_simple(
           prep_
@@ -140,8 +250,8 @@ mod_crosstabs_server <- function(id){
         # return
         gt_
     })
-  })
-}
+  })  # part of server module
+}  # part of server module
 
 ## To be copied in the UI
 # mod_crosstabs_ui("crosstabs_1")
