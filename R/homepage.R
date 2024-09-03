@@ -1,5 +1,7 @@
 # At the time of this writing, there is a bug in shinyMobile 2.0.0 that prevents links from opening inside an f7AccordionItem without it being explicitly an f7Link. This script aims to rectify this by painstakingly writing shiny and shinyMobile functions directly into an R object.
 
+# TODO verify if shinyparameters.xlsx is made redundant
+
 home_ <- list(
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # 1 Overview ----
@@ -7,7 +9,7 @@ home_ <- list(
     title = "Overview",
     html = shiny::tagList(
       shiny::tags$p(
-        'The Sacramento-San Joaquin Delta is the largest estuary on the west coast and the heart of California. The health and well-being of the Delta ecosystem and residents are deeply intertwined. The Delta Residents Survey research project was launched in 2023 by a collaborative group of university partners and California state agencies (California Sea Grant, University of California Davis, University of California Berkeley, Sacramento State University, Oregon State University, and the Delta Stewardship Council) as an effort to measure the well-being of Delta residents and understand how Delta communities are changing over time in response to regional social and environmental changes.'
+        'The Delta Residents Survey is the name of a social science study that seeks to measure the well-being of people who live in the Delta and to understand how these communities are changing over time in response to regional social and environmental changes. The project was launched in 2023 by a collaborative group of university partners-- California Sea Grant, University of California Davis, University of California Berkeley, Sacramento State University and Oregon State University--and was funded by the Delta Stewardship Council. Over 2,200 Delta residents responded to the survey. This web app provides a way to explore the survey results.'
       ),
       shiny::tags$p(
         'This website provides an easy-to-navigate tool for exploring the data from the 2023 Delta Residents Survey. Keep reading for more information about the survey or use the tabs at the bottom of this page to navigate survey results in graphs and tables. A detailed study of all survey results can be found in the ',
